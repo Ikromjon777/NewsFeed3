@@ -102,7 +102,7 @@ ENV/
 
 .DS_Store
 
-media/
+
 *.pyc
 *.db
 *.pid
