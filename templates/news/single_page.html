@@ -1,0 +1,176 @@
+{% extends 'news/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}NewsFeed | Pages | Single Page {% endblock title %}
+
+{% block content %}
+  <section id="contentSection">
+    <div class="row">
+      <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="left_content">
+          <div class="single_page">
+            <ol class="breadcrumb">
+              <li><a href="{% url 'home_page' %}">Home</a></li>
+              <li><a href="#">{{news.category}}</a></li>
+            </ol>
+            <h1>{{ news.title }}</h1>
+            <div class="post_commentbox"> <a href="#"><i class="fa fa-user"></i>Asadbek</a> <span><i class="fa fa-calendar"></i>{{news.create_time}}</span> <a href="#"><i class="fa fa-tags"></i>{{news.category}}</a> <span>Ko'rishlar soni: {{ news.hit_count.hits }}</span>
+ </div>
+            <div class="single_page_content"> <img class="img-center" style="width: 100%; height: 100%" src="{{ news.image.url }}" alt="">
+              <p>{{news.body | linebreaks}}</p>
+              {% if request.user.is_superuser and request.user.is_authenticated %}
+              <div class="text-center"><a href="{% url 'update_view' news.slug %}" class="btn  btn-warning">Tahrirlash</a> <a href="{% url 'delete_view' news.slug %}" class="btn btn-danger">O'chirish</a></div>
+              {% endif %}
+             {% if request.user.is_superuser and request.user.is_authenticated %}
+              <h2>Izoh qoldirish</h2>
+              <form method="post">{% csrf_token %}
+                {{ comment_form | crispy }}
+                <button type="submit" class="btn btn-success">Saqlash</button>
+              </form>
+              {% else %}
+              <h4>Izoh qoldirish uchun <a href="{% url 'login' %}" style="color: red">saytga kiring</a></h4>
+              {% endif %}
+              {% if comments %}
+                  <h2>Izohlar</h2>
+                  {% for comment in comments %}
+                      <p>{{comment.user}}: {{comment.text}}</p>
+                  {% endfor %}
+              {% else %}
+                  <h2>Izohlar yo'q</h2>
+              {% endif %}
+              <button class="btn default-btn">Default</button>
+              <button class="btn btn-red">Red Button</button>
+              <button class="btn btn-yellow">Yellow Button</button>
+              <button class="btn btn-green">Green Button</button>
+              <button class="btn btn-black">Black Button</button>
+              <button class="btn btn-orange">Orange Button</button>
+              <button class="btn btn-blue">Blue Button</button>
+              <button class="btn btn-lime">Lime Button</button>
+              <button class="btn btn-theme">Theme Button</button>
+            </div>
+            <div class="social_link">
+              <ul class="sociallink_nav">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+              </ul>
+            </div>
+            <div class="related_post">
+              <h2>O'xshash yangiliklar</h2>
+              {% for news in newss %}
+              <ul class="spost_nav wow fadeInDown animated">
+                <li class="mb-5">
+                  <div class="media" style="margin-left: 5px"> <a class="media-left" href="{{ news.get_absolute_url }}"> <img src="{{news.image.url}}" alt=""> </a>
+                    <div class="media-body"> <a class="catg_title" href="{{ news.get_absolute_url }}"><p>{{news.title}}</p></a> </div>
+                  </div>
+                </li>
+              </ul>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!--      <nav class="nav-slit"> <a class="prev" href="#"> <span class="icon-wrap"><i class="fa fa-angle-left"></i></span>-->
+<!--        <div>-->
+<!--          <h3>City Lights</h3>-->
+<!--          <img src="../images/post_img1.jpg" alt=""/> </div>-->
+<!--        </a> <a class="next" href="#"> <span class="icon-wrap"><i class="fa fa-angle-right"></i></span>-->
+<!--        <div>-->
+<!--          <h3>Street Hills</h3>-->
+<!--          <img src="../images/post_img1.jpg" alt=""/> </div>-->
+<!--        </a> </nav>-->
+
+      <div class="col-lg-4 col-md-4 col-sm-4">
+        <aside class="">
+          <div class="">
+            <div class="latest_post">
+          <h2><span>So'ngi xabarlar</span></h2>
+          <div class="latest_post_container">
+            <ul class="">
+              {% for news in latest_news2 %}
+              <li style="margin-top:10px">
+                <div class="media"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.image.url }}"> </a>
+                  <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title"> {{ news.title }}</a> </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+          </div>
+          <div class="single_sidebar">
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#category" aria-controls="home" role="tab" data-toggle="tab">Category</a></li>
+              <li role="presentation"><a href="#video" aria-controls="profile" role="tab" data-toggle="tab">Video</a></li>
+              <li role="presentation"><a href="#" aria-controls="messages" role="tab" data-toggle="tab">Comments</a></li>
+            </ul>
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="category">
+                <ul>
+                  <li class="cat-item"><a href="{% url 'mahalliy_page' %}">Mahalliy</a></li>
+                  <li class="cat-item"><a href="{% url 'xorij_page' %}">Xorij</a></li>
+                  <li class="cat-item"><a href="{% url 'texnologiya_page' %}">Texnologiya</a></li>
+                  <li class="cat-item"><a href="{% url 'sport_page' %}">Sport</a></li>
+                  <li class="cat-item"><a href="{% url 'siyosat_page' %}">Siyosat</a></li>
+                </ul>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="video">
+                <div class="vide_area">
+                  <iframe width="100%" height="250" src="http://www.youtube.com/embed/h5QWbURNEpA?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="comments">
+                <ul class="spost_nav">
+                  <li>
+                    <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
+                      <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
+                      <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
+                      <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
+                      <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="single_sidebar wow fadeInDown">
+            <h2><span>Sponsor</span></h2>
+            <a class="sideAdd" href="https://beeline.uz/"><img src="https://scontent.ftas3-2.fna.fbcdn.net/v/t39.30808-6/273806194_5571819956195887_8686601449819903699_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=730e14&_nc_ohc=ZnOcrSc8kIwAX8hsOpF&_nc_ht=scontent.ftas3-2.fna&oh=00_AfCVtwxwcAEodURKSL0O5gv5hprMyC37CqTXFwprOluVJA&oe=64C1B231" alt=""></a> </div>
+      <div class="single_sidebar wow fadeInDown">
+            <h2><span>Barcha kategoriyalar</span></h2>
+            <select class="catgArchive">
+              <option>Kategoriyani tanlang</option>
+              {% for category in category %}
+              <option>{{ category.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="single_sidebar wow fadeInDown">
+            <h2><span>Links</span></h2>
+            <ul>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Rss Feed</a></li>
+              <li><a href="#">Login</a></li>
+              <li><a href="#">Life &amp; Style</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+{% endblock content %}

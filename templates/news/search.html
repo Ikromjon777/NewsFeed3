@@ -1,0 +1,34 @@
+{% extends 'news/base.html' %}
+{% load static %}
+{% block title %}Qidiruv natijalari{% endblock title %}
+
+{% block content %}
+
+  <section id="contentSection">
+    <div class="row">
+
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <div class="latest_post">
+          <div class="container">
+            {% if news %}
+            <h2>Qidiruv natijalari</h2>
+            {% for news in news %}
+            <ul class="" style="margin-bottom:20px">
+              <li style="margin-top:20px">
+                <div class="media"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.image.url }}" style="width: 150px; height: 120px"> </a>
+                  <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title" style="font-size: 16px"> {{ news.title }}</a> </div>
+                </div>
+              </li>
+            </ul>
+            {% endfor %}
+            {% else %}
+            <h2>Qidiruv natijalari yo'q</h2>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% extends 'news/base.html' %}
+{% load static %}
+{% block title %}Sport{% endblock title %}
+
+{% block content %}
+
+  <section id="contentSection">
+    <div class="row">
+
+      <div class="col-lg-10 col-md-10 col-sm-10">
+        <div class="latest_post">
+          <h2><span>Sport</span></h2>
+          <div class="container">
+            {% for news in news %}
+            <ul class="" style="margin-bottom:20px">
+              <li style="margin-top:20px">
+                <div class="media"> <a href="{{ news.get_absolute_url }}" class="media-left"> <img alt="" src="{{ news.image.url }}" style="width: 150px; height: 120px"> </a>
+                  <div class="media-body"> <a href="{{ news.get_absolute_url }}" class="catg_title" style="font-size: 16px"> {{ news.title }}</a> </div>
+                </div>
+              </li>
+            </ul>
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!--    {% for news in news %}-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-sm-8">-->
+<!--                    <img src="{{ news.image.url }}" style="width:50%">-->
+<!--                    <h2>{{ news.title }}</h2>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    {% endfor %}-->
+{% endblock content %}

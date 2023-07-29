@@ -1,0 +1,15 @@
+{% extends 'news/base.html' %}
+{% load static %}
+{% block title %}Profile sahifasi {% endblock title %}
+
+{% block content %}
+<h2 style="margin-bottom: 15px">Profile sahifasi</h2>
+<label style="margin-bottom: 15px">Username: </label> <input value="{{request.user.username}}" readonly><br>
+<label style="margin-bottom: 15px">First name: </label> <input value="{{request.user.first_name}}" readonly><br>
+<label style="margin-bottom: 15px">Last name: </label> <input value="{{request.user.last_name}}" readonly><br>
+<label style="margin-bottom: 15px">Email: </label> <input value="{{request.user.email}}" readonly><br>
+<a href="{% url 'password_change' %}" class="btn btn-warning">Parolni o'zgartirish</a>  <a href="{% url 'profile_edit' %}" class="btn btn-info">Profilni tahrirlash</a>
+{% if request.user.is_authenticated and request.user.is_superuser %}
+<a href="{% url 'admin_page' %}" class="btn btn-success">Admin sahifasi</a>
+{% endif %}
+{% endblock content %}

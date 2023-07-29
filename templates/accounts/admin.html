@@ -1,0 +1,27 @@
+{% extends 'news/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Admin sahifasi {% endblock title %}
+
+{% block content %}
+<h2>Admin sahifasi</h2>
+<h4>Barcha Adminlar</h4>
+<table class="table table-striped">
+  <tr>
+    <th scope="col">Username: </th>
+    <th scope="col">Ismi: </th>
+    <th scope="col">Familiyasi: </th>
+    <th scope="col">Email: </th>
+  </tr>
+  {% for admin in super_users %}
+  <tr>
+    <td>{{admin.username}}</td>
+    <td>{{admin.first_name}}</td>
+    <td>{{admin.last_name}}</td>
+    <td>{{admin.email}}</td>
+  </tr>
+  {% endfor %}
+</table>
+<br>
+<a href="{% url 'create_view' %}" class="btn btn-primary">+Yangilik qo'shish</a>
+{% endblock content %}

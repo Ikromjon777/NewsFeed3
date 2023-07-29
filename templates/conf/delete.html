@@ -1,0 +1,11 @@
+{% extends 'news/base.html' %}
+{% load static %}
+{% block title %} O'chirish {% endblock title %}
+
+{% block content %}
+<h2>Yangilik o'chirish oynasi</h2>
+<form method="post">{% csrf_token %}
+  <h4>"{{news.title}}" <span>sarlavha nomli</span></h4>
+    <button type="submit" class="btn btn-primary">Yangilikni o'chirmoqchimisiz ?</button>
+</form>
+{% endblock content %}

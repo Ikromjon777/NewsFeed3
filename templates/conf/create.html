@@ -1,0 +1,13 @@
+{% extends 'news/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Yangilik qo'shish {% endblock title %}
+
+{% block content %}
+<h2>Yangilik qo'shish</h2>
+<!--formamizga rasm ham qo'shiganimiz uchun enctype atributini ko'satamiz-->
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    {{ form | crispy }}
+    <button type="submit" value="Save" class="btn btn-primary">Qo'shish</button>
+</form>
+{% endblock content %}
